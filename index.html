@@ -42,11 +42,13 @@
     				<thead>
     					<tr class="success">
     						<th ng-click="ordenarPor='pid'"> pid </th>
+    						<th ng-click="ordenarPor='datname'"> datname </th>
     						<th ng-click="ordenarPor='client_addr'"> client_addr </th>
     						<th ng-click="ordenarPor='application_name'"> application_name </th>
-    						<th ng-click="ordenarPor='backend_start'"> backend_start </th>
-    						<th ng-click="ordenarPor='query_start'"> query_start </th>
-    						<th ng-click="ordenarPor='state_change'"> state_change </th>
+<!--     						<th ng-click="ordenarPor='backend_start'"> backend_start </th> -->
+<!--     						<th ng-click="ordenarPor='query_start'"> query_start </th> -->
+<!--     						<th ng-click="ordenarPor='state_change'"> state_change </th> -->
+    						<th ng-click="ordenarPor='tempo_idle'"> tempo_idle </th>
     						<th ng-click="ordenarPor='waiting'"> waiting </th>
     						<th ng-click="ordenarPor='query'"> query </th>
     						<th ng-click="ordenarPor='state'"> state </th>
@@ -56,14 +58,26 @@
     				<tbody>
     					<tr ng-repeat="linha in processosVetor  | orderBy: ordenarPor | filter: filtro as filtrado">
     						<th scope="row">{{ linha.pid }}</th>
+    						<td> {{ linha.datname }}</td>
     						<td> <span ng-class="{ 'label label-info': (podeExibirDestaqueIP(linha)) }">  {{ linha.client_addr }} </span> </td>
     						<td>{{ linha.application_name }}</td>
-    						<td>{{ linha.backend_start | dateToISO | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-    						<td>{{ (linha.query_start | dateToISO | date:'dd/MM/yyyy HH:mm:ss') }} </td>
-    						<td>{{ linha.state_change | dateToISO | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+<!--     						<td>{{ linha.backend_start | dateToISO | date:'dd/MM/yy HH:mm:ss' }}</td> -->
+<!--     						<td>{{ linha.query_start | dateToISO | date:'dd/MM/yy HH:mm:ss' }} </td> -->
+<!--     						<td>{{ linha.state_change | dateToISO | date:'dd/MM/yy HH:mm:ss' }}</td> -->
+    						<td title="
+    							backend_start: {{ linha.backend_start | dateToISO | date:'dd/MM/yy HH:mm:ss' }}  query_start: {{ linha.query_start | dateToISO | date:'dd/MM/yy HH:mm:ss' }}  state_change: {{ linha.state_change | dateToISO | date:'dd/MM/yy HH:mm:ss' }}
+    						">
+    							{{ linha.tempo_idle }}
+    						</td>
     						<td>{{ linha.waiting }}</td>
     						<td title="{{ linha.query }}">{{ linha.query | limitTo: 15 }}...</td>
-    						<td> <span ng-class="{ 'label label-danger': linha.state == 'active' }"> {{ linha.state }} </span> </td>
+    						<td> 
+    							<span ng-class="{ 'label label-danger': linha.state == 'active' }"> 
+    							<span ng-class="{ 'label label-warning': linha.state == 'idle' }">
+    								{{ linha.state }} 
+    							</span> 
+    							</span> 
+    						</td>
     						<td>
     							<button type="button" class="btn btn-info btn-xs" ng-click="clkOpcaoInfo(linha)"> Info </button>
     							<button type="button" class="btn btn-danger btn-xs" ng-if="podeExibirBotaoKill(linha)" ng-click="clkOpcaoKill(linha)"> Kill </button>

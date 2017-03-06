@@ -6,10 +6,10 @@
 	$host = $_SERVER['HTTP_HOST'];
 	
 	//Usado para fazer a validação se o processo é da pessoa que esta no sistema
-	$row = OutletExtension::execSql( "SELECT pid FROM pg_stat_activity WHERE datname = 'virtualif_testes' AND client_addr = '" . $host . "' AND pid = " . $pid . " " );
+	$row = Conexao::query( "SELECT pid FROM pg_stat_activity WHERE datname = 'virtualif_testes' AND client_addr = '" . $host . "' AND pid = " . $pid . " " );
 		
 	if (!empty($pid) && !empty($row)){
-		$row = OutletExtension::execSql( "select pg_terminate_backend( " . $pid . ")" );				
+		$row = Conexao::query( "select pg_terminate_backend( " . $pid . ")" );				
 	}
 	else {
 		$row[0]["pg_terminate_backend"] = false;

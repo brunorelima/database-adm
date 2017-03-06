@@ -11,9 +11,9 @@ app.controller('FormController', function($scope, $http) {
 			$scope.processosVetor = response.data.obj;
 			$scope.host = response.data.host;
 			
-			if ($scope.filtro == null && $scope.host.toString().indexOf("192.168.1.") >= 0 ) {
-				$scope.filtro = $scope.host;			
-			}
+//			if ($scope.filtro == null && $scope.host.toString().indexOf("192.168.1.") >= 0 ) {
+//				$scope.filtro = $scope.host;			
+//			}
 		});
 	};
 	
